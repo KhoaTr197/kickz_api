@@ -3,14 +3,6 @@ const imagesController = require('../controllers/imagesController');
 const router = express.Router();
 
 //IMAGES
-router.get('/', imagesController.getAllImages);
-
-router.get('/:id', imagesController.getOneImage);
-
-router.post('/', imagesController.createNewImage);
-
-router.patch('/:id', imagesController.updateOneImage);
-
-router.delete('/:id', imagesController.deleteOneImage);
+router.get('/:mode/:filename.jpg', imagesController.getOneImage);
 
 module.exports = router;

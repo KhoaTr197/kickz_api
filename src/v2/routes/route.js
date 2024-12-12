@@ -1,7 +1,11 @@
+const express = require('express');
 const shoesRouter = require('./shoesRoute');
 const imagesRouter = require('./imagesRoute');
 
-module.exports = {
-  shoesRouter,
-  imagesRouter
-};
+const router = express.Router();
+
+router.use('/images', imagesRouter);
+
+router.use('/shoes', shoesRouter);
+
+module.exports = router;

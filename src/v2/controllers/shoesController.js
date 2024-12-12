@@ -1,7 +1,35 @@
+require('dotenv').config({ path: '../../../.env' })
+const { hasAllKeys, checkShoeValid } = require('../utils/utils')
 const shoesService = require('../services/shoesService');
+
+let controller = {}
+
 //SHOES CONTROLER
-const getAllShoes = (req, res) => {
+controller.getAllShoes = (req, res) => {
   shoesService.getAllShoes()
+    .then(data => {
+      res.send({
+        status: 200,
+        data: data
+      });
+    })
+    .catch(error => {
+      res.send({
+        status: "ERROR",
+        message: "Can't get data",
+        detail: error
+      });
+    })
+};
+
+controller.searchShoes = (req, res) => {
+  const { limit, skip, q: searchQuery } = req.query;
+
+  shoesService.searchShoes(
+    Number(limit),
+    Number(skip),
+    searchQuery
+  )
   .then(data => {
     res.send({
       status: 200,
@@ -15,73 +43,58 @@ const getAllShoes = (req, res) => {
       detail: error
     });
   })
-};
+}
 
-const getOneShoe = (req, res) => {
+controller.getShoeById = (req, res) => {
   const { id } = req.params;
-  shoesService.getOneShoe(id)
-  .then(data => {
-    res.status(200).send({
-      status: 200,
-      data: data
-    });
-  })
-  .catch(error => {
-    res.status(400).send({
-      status: "ERROR",
-      message: "Can't get data",
-      detail: error
-    });
-  })
+
+  shoesService.getShoeById(id)
+    .then(data => {
+      res.status(200).send({
+        status: 200,
+        data: data
+      });
+    })
+    .catch(error => {
+      res.status(400).send({
+        status: "ERROR",
+        message: "Can't get data",
+        detail: error
+      });
+    })
 };
 
-const createNewShoe = (req, res) => {
+controller.createNewShoe = (req, res) => {
   const { body } = req;
 
-  if ( 
-    !body.name
-  ) {
-    res.status(400).send({
+  if (!checkShoeValid(body)) {
+    return res.status(400).send({
       status: "ERROR",
       message: "The request body is missing keys!"
     });
-    return;
   }
+
   const newShoe = {
-    name: body.name
+    ...body
   };
+
   shoesService.createNewShoe(newShoe)
-  .then(result => {
-    res.status(201).send({
-      status: "OK",
-      data: {
-        ...result,
-        newShoe
-      }
-    });
-  })
-  .catch(error => {
-    res.status(400).send({
-      status: "ERROR",
-      message: "Can't add a new Shoe!",
-      detail: error
-    });
-  })
-
+    .then(result => {
+      res.status(201).send({
+        status: "OK",
+        data: {
+          ...result,
+          newShoe
+        }
+      });
+    })
+    .catch(error => {
+      res.status(400).send({
+        status: "ERROR",
+        message: "Can't add a new Shoe!",
+        detail: error
+      });
+    })
 };
 
-const updateOneShoe = (req, res) => {
-  res.send("update a shoe");
-};
-
-const deleteOneShoe = (req, res) => {
-  res.send("delete a shoe");
-};
-
-module.exports = {
-  getAllShoes,
-  getOneShoe,
-  createNewShoe,
-  updateOneShoe,
-  deleteOneShoe
-};
+module.exports = controller;

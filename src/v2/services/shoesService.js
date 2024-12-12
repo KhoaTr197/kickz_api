@@ -1,53 +1,70 @@
 const DB = require('./database');
 
+const services = {};
+
 //SHOES SERVICE
-// const movies = database.collection('movies');
-// const query = { title: 'Back to the Future' };
-// const movie = await movies.findOne(query);
-//console.log(movie);
-const getAllShoes = async () => {
+services.getAllShoes = async () => {
   const db = await DB.connect();
   const shoes = db.collection('shoes');
 
   const allShoes = await shoes.find().toArray();
-  DB.disconnect();
 
   return allShoes;
 };
 
-const getOneShoe = async (id) => {
+services.searchShoes = async (
+  limit,
+  skip,
+  searchQuery
+) => {
+  const db = await DB.connect();
+  const shoes = db.collection('shoes');
+
+  // shoes.createIndex({ 
+  //   name: "text",
+  //   description: "text"
+  // });
+
+  const foundedShoes = shoes
+    .find({ $text: { $search: searchQuery } })
+    .limit(limit ? limit : 0)
+    .skip(skip ? skip : 0)
+    .toArray();
+
+  return foundedShoes;
+}
+
+services.getShoeById = async (id) => {
   const db = await DB.connect();
   const shoes = db.collection('shoes');
 
   const query = { id: Number(id) };
   const foundedShoe = await shoes.findOne(query);
-  console.log(foundedShoe);
-  DB.disconnect();
 
   return foundedShoe;
 };
 
-const createNewShoe = async (newShoe) => {
+services.createNewShoe = async (newShoe) => {
   const db = await DB.connect();
+  const brands = db.collection('brands');
+  const brandImages = db.collection('brand_images');
   const shoes = db.collection('shoes');
-  const result = await shoes.insertOne(newShoe);
-  DB.disconnect();
+
+  const brandData = await brands.findOne({ name: newShoe.brand });
+  const brandImagesData = await brandImages.findOne({ brand_id: brandData.id });
+  const latestShoe = await shoes.find().sort({ id: -1 }).limit(1).toArray();
+
+  const result = await shoes.insertOne({
+    ...newShoe,
+    id: latestShoe[0].id + 1,
+    brand: {
+      id: brandData.id,
+      name: brandData.name,
+      image: brandImagesData.filename
+    }
+  });
 
   return result;
 };
 
-const updateOneShoe = async () => {
-  res.send("update a shoe");
-};
-
-const deleteOneShoe = async () => {
-  res.send("delete a shoe");
-};
-
-module.exports = {
-  getAllShoes,
-  getOneShoe,
-  createNewShoe,
-  updateOneShoe,
-  deleteOneShoe
-};
+module.exports = services;

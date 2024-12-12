@@ -4,7 +4,9 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 const URI = `${process.env.DB_PROTOCOL}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/`;
 
-const client = new MongoClient(URI);
+const client = new MongoClient(URI, {
+  'maxPoolSize': 5
+});
 
 const connect = async () => {
   try {
