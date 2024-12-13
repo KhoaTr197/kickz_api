@@ -1,4 +1,4 @@
-const DB = require('./database');
+const DB = require('../db/database');
 
 //IMAGES SERVICE
 const getOneImage = async (filename, table) => {

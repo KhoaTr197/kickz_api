@@ -2,11 +2,16 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
-const URI = `${process.env.DB_PROTOCOL}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/`;
+const dbConfig = {
+  dbName: process.env.DB_NAME || 'dummyjson-test-db',
+  maxPoolSize: 5,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+};
 
-const client = new MongoClient(URI, {
-  'maxPoolSize': 5
-});
+const URI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/`;
+
+const client = new MongoClient(URI, dbConfig);
 
 const connect = async () => {
   try {
