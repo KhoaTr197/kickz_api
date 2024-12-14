@@ -6,7 +6,12 @@ let controller = {}
 
 //SHOES CONTROLER
 controller.getAllShoes = (req, res) => {
-  shoesService.getAllShoes()
+  const { limit = 40, skip = 0 } = req.query;
+
+  shoesService.getAllShoes(
+    Number(limit),
+    Number(skip),
+  )
     .then(data => {
       res.send({
         status: 200,
@@ -23,7 +28,7 @@ controller.getAllShoes = (req, res) => {
 };
 
 controller.searchShoes = (req, res) => {
-  const { limit, skip, q: searchQuery } = req.query;
+  const { limit = 0, skip = 0, q: searchQuery } = req.query;
 
   shoesService.searchShoes(
     Number(limit),

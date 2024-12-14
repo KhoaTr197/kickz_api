@@ -30,6 +30,6 @@ async function setupApp() {
   });
   
   app.listen(PORT, () => {
-    console.log(`[MASTER] API is hosting on http://localhost:${PORT}/api/v2`); 
+    console.log(`[MASTER] API is hosting on http://localhost:${PORT}`); 
   })
 }

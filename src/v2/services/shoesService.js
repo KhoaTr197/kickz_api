@@ -3,11 +3,18 @@ const DB = require('../db/database');
 const services = {};
 
 //SHOES SERVICE
-services.getAllShoes = async () => {
+services.getAllShoes = async (
+  limit,
+  skip
+) => {
   const db = await DB.connect();
   const shoes = db.collection('shoes');
 
-  const allShoes = await shoes.find().toArray();
+  const allShoes = await shoes
+  .find()
+  .limit(limit)
+  .skip(skip)
+  .toArray();
 
   return allShoes;
 };
@@ -25,10 +32,10 @@ services.searchShoes = async (
   //   description: "text"
   // });
 
-  const foundedShoes = shoes
+  const foundedShoes = await shoes
     .find({ $text: { $search: searchQuery } })
-    .limit(limit ? limit : 0)
-    .skip(skip ? skip : 0)
+    .limit(limit)
+    .skip(skip)
     .toArray();
 
   return foundedShoes;

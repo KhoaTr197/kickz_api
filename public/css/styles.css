@@ -27,6 +27,7 @@ h1 {
 }
 
 section {
+  padding: var(--navHeight) 2rem 2rem 2rem;
   height: 100vh;
 }
 
@@ -134,4 +135,73 @@ section .content .btns-container {
 
 .btns-container {
   gap: 1rem;
+}
+
+.docs-sidebar {
+  flex-basis: 25%;
+  margin: 3rem 2rem 0 0;
+  height: fit-content;
+  background-color: #f3f3f3;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.docs-sidebar-item {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(228, 225, 225, 0.5);
+}
+
+.docs-main {
+  flex-basis: 75%;
+}
+
+.docs-title {
+  font-size: 3rem;
+  margin-top: 3rem;
+}
+
+.display-para {
+  font-weight: 300;
+  font-size: 1.75rem;
+  margin: 1rem 0;
+}
+
+.resource {
+  padding-bottom: 2rem;
+  border-bottom: .25rem solid #e9eded;
+}
+
+.res-title {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.res-tip {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #ffeac3;
+  border-radius: .5rem;
+}
+
+.inline-code {
+  color: #263238;
+  border: 1px solid rgba(38, 50, 56, .25);
+  background-color: rgba(255, 255, 255, .5);
+  padding: .15rem .125rem 0 .125rem;
+  border-radius: .25rem;
+}
+
+section .resource pre {
+  background-color: #263238;
+  padding: 0;
+  border-radius: .5rem;
+  margin-top: 1rem;
+}
+
+section .resource pre code {
+  border-radius: .5rem;
+  display: block;
+  margin: 0;
+  padding: 1rem;
 }

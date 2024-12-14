@@ -1,6 +1,6 @@
 const DB = require('../db/database');
 
-//IMAGES SERVICE
+//IMAGE SERVICE
 const getOneImage = async (filename, table) => {
   const db = await DB.connect();
   const images = db.collection(`${table}_images`);

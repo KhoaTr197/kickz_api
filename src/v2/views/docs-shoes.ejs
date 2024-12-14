@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head') %>
+<body>
+  <%- include('./partials/header') %>
+  
+  <section class="flex justify-center">
+    <div class="wide flex">
+      <%- include('./partials/docsSidebar') %>
+      <div class="docs-main">
+        <h1 class="docs-title">
+          Shoes - Docs
+        </h1>
+        <p class="display-para">
+          The shoes endpoint provides a dataset of shoes information likes name, brand, description and images. Suitable for e-commerce & analysis applications.
+        </p>
+
+<div class="resource" id="shoes-all">
+<a href="#shoes-all" class="res-title">Get all shoes</a>
+<p class="res-desc">
+  By default you will get 30 items, use <a href="#products-limit_skip">Limit and skip</a> to paginate through all items.
+</p>
+
+<pre>
+<code class="language-js">
+  fetch('https://dummyjson.com/shoes')
+  .then(res => res.json())
+  .then(console.log);
+</code>
+</pre>
+</div>
+
+<div class="resource" id="shoes-single">
+<a href="#shoes-single" class="res-title">Get a shoe</a>
+
+<pre>
+<code class="language-js">
+  fetch('https://dummyjson.com/shoes/1')
+  .then(res => res.json())
+  .then(console.log);
+</code>
+</pre>
+</div>
+
+<div class="resource" id="shoes-search">
+<a href="#shoes-search" class="res-title">Search shoes</a>
+
+<pre>
+<code class="language-js">
+  fetch('https://dummyjson.com/search?name=Jordan')
+  .then(res => res.json())
+  .then(console.log);
+</code>
+</pre>
+</div>
+
+<div class="resource" id="shoes-limit_skip">
+<a href="#shoes-limit_skip" class="res-title">Limit and skip shoes</a>
+<p class="res-desc">
+  By default you will get 30 items, use <a href="#shoes-limit_skip">Limit and skip</a> to paginate through all items.
+</p>
+<p class="res-tip">
+  You can pass <span class="inline-code">limit</span> and <span class="inline-code">skip</span> params to limit and skip the
+  results for pagination, and use <span class="inline-code">limit=0</span> to get all items.
+</p>
+<pre>
+<code class="language-js">
+  fetch('https://dummyjson.com/search?limit=10&skip=2')
+  .then(res => res.json())
+  .then(console.log);
+</code>
+</pre>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
