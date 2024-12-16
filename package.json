@@ -4,21 +4,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "webpack --config webpack.config.js index.js"
   },
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "description": "",
+  "description": "[Kickz API](https://localhost:3377) is free-online API for sneaker-relevant front-end development, testing.",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "mongodb": "^6.11.0",
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
   }
 }

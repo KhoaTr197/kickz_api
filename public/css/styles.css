@@ -83,6 +83,7 @@ section {
 }
 
 .navbar {
+  z-index: 999;
   position: fixed;
   background-color: black;
   width: 100%;
@@ -149,6 +150,10 @@ section .content .btns-container {
 .docs-sidebar-item {
   padding: 1rem;
   border-bottom: 1px solid rgba(228, 225, 225, 0.5);
+}
+
+.docs-sidebar-item a.active {
+  color: #91d19f;
 }
 
 .docs-main {
